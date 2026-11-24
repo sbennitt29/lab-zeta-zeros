@@ -7,6 +7,9 @@ ESTIMATE_COLORS = {4: "#0072b2", 16: "#cb5012", 64: "#007a59", 256: "#875097"}
 def plot_prime_count(ax, numbers, counts):
     """Draw the running count, with a jump at each prime."""
     ax.step(numbers, counts, where="post", label="Prime count")
+    ax.set_title("How many primes have we passed?")
+    ax.set_xlabel("Number")
+    ax.set_ylabel("Prime Count")
 
 
 def plot_outputs(ax, values):
@@ -67,9 +70,6 @@ def main():
     numbers, counts = prime_counts()
     fig, ax = plt.subplots(figsize=(7, 3), layout="constrained")
     plot_prime_count(ax, numbers, counts)
-    ax.set_title("How many primes have we passed?")
-    ax.set_xlabel("Number")
-    ax.set_ylabel("Prime Count")
     ax.set_xticks([1, 2, 3, 5, 7, 11, 13, 17, 19])
     fig.savefig("prime-steps.png", dpi=160)
     plt.close(fig)
