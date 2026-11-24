@@ -20,6 +20,9 @@ def plot_outputs(ax, values):
     ax.plot(real_parts, imag_parts)
     ax.scatter(0, 0)
     ax.set_aspect("equal")
+    ax.set_title("Zeta Function Outputs")
+    ax.set_xlabel("Real Part")
+    ax.set_ylabel("Imaginary Part")
 
 
 def plot_inputs(ax, heights):
@@ -28,6 +31,9 @@ def plot_inputs(ax, heights):
 
     for height in heights:
         ax.scatter(0.5, height)
+    ax.set_title("Inputs to the Zeta Function")
+    ax.set_xlabel("Real Part")
+    ax.set_ylabel("Imaginary Part")
 
 
 def plot_estimates(axes, numbers, counts, x, estimates):
@@ -71,13 +77,7 @@ def main():
     heights, values = sample_zeta()
     fig, (left, right) = plt.subplots(1, 2, figsize=(8, 3.7), layout="constrained")
     plot_outputs(left, values)
-    left.set_title("Zeta Function Outputs")
-    left.set_xlabel("Real Part")
-    left.set_ylabel("Imaginary Part")
     plot_inputs(right, heights)
-    right.set_title("Inputs to the Zeta Function")
-    right.set_xlabel("Real Part")
-    right.set_ylabel("Imaginary Part")
     right.set(xlim=(0, 1), ylim=(0, 30), xticks=[0, 0.5, 1])
     fig.savefig("zeta.png", dpi=160)
     plt.close(fig)
