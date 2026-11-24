@@ -6,22 +6,38 @@ ESTIMATE_COLORS = {4: "#0072b2", 16: "#cb5012", 64: "#007a59", 256: "#875097"}
 
 def plot_prime_count(ax, numbers, counts):
     """Draw the running count, with a jump at each prime."""
-    pass
+    ax.step(numbers, counts, where="post", label="Prime count")
 
 
 def plot_outputs(ax, values):
     """Trace the complex outputs in order and mark the origin."""
-    pass
+    real_parts = []
+    imag_parts = []
+
+    for w in values:
+        real_parts.append(w.real)
+        imag_parts.append(w.imag)
+    ax.plot(real_parts, imag_parts)
+    ax.scatter(0, 0)
+    ax.set_aspect("equal")
 
 
 def plot_inputs(ax, heights):
     """Mark the inputs that send the curve through the origin."""
-    pass
+    ax.axvline(x=0.5)
+
+    for height in heights:
+        ax.scatter(0.5, height)
 
 
 def plot_estimates(axes, numbers, counts, x, estimates):
     """Compare the staircase with one estimate per panel."""
-    pass
+    for ax, n in zip(axes, estimates):
+        plot_prime_count(ax, numbers, counts)
+        draw_estimate(ax, x, estimates[n], n)
+        ax.set_title(f'{n} zeros')
+        ax.set_xlabel("Number")
+        ax.set_ylabel("Number of primes")
 
 
 def draw_estimate(ax, x, y, n):
@@ -45,6 +61,9 @@ def main():
     numbers, counts = prime_counts()
     fig, ax = plt.subplots(figsize=(7, 3), layout="constrained")
     plot_prime_count(ax, numbers, counts)
+    ax.set_title("How many primes have we passed?")
+    ax.set_xlabel("Number")
+    ax.set_ylabel("Prime Count")
     ax.set_xticks([1, 2, 3, 5, 7, 11, 13, 17, 19])
     fig.savefig("prime-steps.png", dpi=160)
     plt.close(fig)
@@ -52,7 +71,13 @@ def main():
     heights, values = sample_zeta()
     fig, (left, right) = plt.subplots(1, 2, figsize=(8, 3.7), layout="constrained")
     plot_outputs(left, values)
+    left.set_title("Zeta Function Outputs")
+    left.set_xlabel("Real Part")
+    left.set_ylabel("Imaginary Part")
     plot_inputs(right, heights)
+    right.set_title("Inputs to the Zeta Function")
+    right.set_xlabel("Real Part")
+    right.set_ylabel("Imaginary Part")
     right.set(xlim=(0, 1), ylim=(0, 30), xticks=[0, 0.5, 1])
     fig.savefig("zeta.png", dpi=160)
     plt.close(fig)
